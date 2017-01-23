@@ -11,7 +11,74 @@
             "HeapMemoryUsage",
             "NonHeapMemoryUsage"
           ],
-          "resultAlias": "jvm.heap",
+          "resultAlias": "jvm.memory",
+          "outputWriters": [
+            {
+              "@class": "com.googlecode.jmxtrans.model.output.CloudWatchWriter",
+              "settings": {
+                "namespace": "JMX"
+              },
+              "dimensions": [
+                {
+                  "name": "InstanceId",
+                  "value": "$InstanceId"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "obj": "java.lang:type=GarbageCollector,name=*",
+          "attr": [
+            "CollectionCount",
+            "CollectionTime"
+          ],
+          "resultAlias": "jvm.gc",
+          "outputWriters": [
+            {
+              "@class": "com.googlecode.jmxtrans.model.output.CloudWatchWriter",
+              "settings": {
+                "namespace": "JMX"
+              },
+              "dimensions": [
+                {
+                  "name": "InstanceId",
+                  "value": "$InstanceId"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "obj": "java.lang:type=MemoryPool,name=*",
+          "attr": [
+            "Usage"
+          ],
+          "resultAlias": "jvm.memorypool",
+          "outputWriters": [
+            {
+              "@class": "com.googlecode.jmxtrans.model.output.CloudWatchWriter",
+              "settings": {
+                "namespace": "JMX"
+              },
+              "dimensions": [
+                {
+                  "name": "InstanceId",
+                  "value": "$InstanceId"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "obj": "java.lang:type=Threading",
+          "attr": [
+            "DaemonThreadCount",
+            "PeakThreadCount",
+            "ThreadCount",
+            "TotalStartedThreadCount"
+          ],
+          "resultAlias": "jvm.threads",
           "outputWriters": [
             {
               "@class": "com.googlecode.jmxtrans.model.output.CloudWatchWriter",
