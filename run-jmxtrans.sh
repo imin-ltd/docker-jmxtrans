@@ -1,7 +1,7 @@
 #!/bin/bash
 
 JMXTRANS_HEAP_SIZE=${JMXTRANS_HEAP_SIZE:-"512"}
-JMXTRANS_LOG_LEVEL=${JMXTRANS_LOG_LEVEL:-"info"}
+JMXTRANS_LOG_LEVEL=${JMXTRANS_LOG_LEVEL:-"debug"}
 JMXTRANS_PERIOD=${JMXTRANS_PERIOD:-"10"}
 
 JMXTRANS_JAR="/usr/share/jmxtrans/lib/jmxtrans-all.jar"
@@ -17,18 +17,23 @@ cat <<EOF > $JMXTRANS_CONFIG
       "queries": [
         {
           "obj": "java.lang:type=Memory",
-          "attr": [ "HeapMemoryUsage", "NonHeapMemoryUsage" ],
+          "attr": [
+            "HeapMemoryUsage",
+            "NonHeapMemoryUsage"
+          ],
           "resultAlias": "jvm.heap",
           "outputWriters": [
-            {
-              "@class": "com.googlecode.jmxtrans.model.output.StdOutWriter"
-            },
             {
               "@class": "com.googlecode.jmxtrans.model.output.CloudWatchWriter",
               "settings": {
                 "namespace": "JMX"
               },
-              "dimensions": []
+              "dimensions": [
+                {
+                  "name": "InstanceId",
+                  "value": "$InstanceId"
+                }
+              ]
             }
           ]
         }
