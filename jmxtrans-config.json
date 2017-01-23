@@ -1,0 +1,33 @@
+{
+  "servers": [
+    {
+      "alias": "${jmx.alias}",
+      "host": "${jmx.host}",
+      "port": "${jmx.port}",
+      "queries": [
+        {
+          "obj": "java.lang:type=Memory",
+          "attr": [
+            "HeapMemoryUsage",
+            "NonHeapMemoryUsage"
+          ],
+          "resultAlias": "jvm.heap",
+          "outputWriters": [
+            {
+              "@class": "com.googlecode.jmxtrans.model.output.CloudWatchWriter",
+              "settings": {
+                "namespace": "JMX"
+              },
+              "dimensions": [
+                {
+                  "name": "InstanceId",
+                  "value": "$InstanceId"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

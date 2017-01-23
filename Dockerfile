@@ -7,4 +7,8 @@ RUN dpkg -i jmxtrans-263.deb
 COPY run-jmxtrans.sh /run-jmxtrans.sh
 RUN chmod 755 /run-jmxtrans.sh
 
+COPY jmxtrans-config.json /jmxtrans-config.json
+
+COPY log4j.xml /log4j.xml
+
 CMD ["/run-jmxtrans.sh"]
