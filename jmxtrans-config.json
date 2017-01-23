@@ -93,6 +93,30 @@
               ]
             }
           ]
+        },
+        {
+          "obj": "com.zaxxer.hikari:type=Pool (HikariPool-1)",
+          "attr": [
+            "ActiveConnections",
+            "IdleConnections",
+            "TotalConnections",
+            "ThreadsAwaitingConnection"
+          ],
+          "resultAlias": "jvm.hikaripool",
+          "outputWriters": [
+            {
+              "@class": "com.googlecode.jmxtrans.model.output.CloudWatchWriter",
+              "settings": {
+                "namespace": "JMX"
+              },
+              "dimensions": [
+                {
+                  "name": "InstanceId",
+                  "value": "$InstanceId"
+                }
+              ]
+            }
+          ]
         }
       ]
     }
